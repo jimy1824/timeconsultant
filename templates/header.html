@@ -1,0 +1,59 @@
+{% load static %}
+<header class="header">
+    <div class="headTop">
+        <div class="wrapper ">
+            <div class="headTopFlex">
+                <div>
+                    <a href="mailto:info@yourdomain.com"><i class="fa fa-envelope-o"></i>info@yourdomain.com </a>
+                    <a href="tel:info@yourdomain.com"><i class="fa fa-mobile"></i>+92 308 4578 123</a>
+                </div>
+                <ul class="socialIcons">
+                    <li><a href="#" class="fa fa-facebook-f"></a></li>
+                    <li><a href="#" class="fa fa-instagram"></a></li>
+                    <li><a href="#" class="fa fa-twitter"></a></li>
+                    <li><a href="#" class="fa fa-linkedin"></a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="wrapper">
+        <div class="headBottom">
+            <a href="{% url "home" %}" title="" class="logo">
+                <img src="{% static 'images/logo.svg' %}" height="" width="" alt="logo">
+            </a>
+            <nav class="main-menu-nav ">
+                <div class="body-overlay"></div>
+                <div class="menu-toggler"></div>
+                <div class="main-menu-div">
+                    <div class="menu-header">
+                        <a href="#" class="home-icon fa fa-home"></a>
+                        <span class="close-icon fa fa-times"></span>
+                    </div>
+                    <ul>
+                        <li>
+                            <a href="{% url 'import_data' %}">import  courses</a>
+                        </li>
+                        <li>
+                            <a href="{% url 'import_scholarships' %}">import scholarships</a>
+                        </li>
+                         <li>
+                            <a href="{% url 'import-institute-logos-data' %}">import institutes logo</a>
+                        </li>
+                         <li>
+                            <a href="{% url 'import-institute-raking' %}">import institutes Ranking</a>
+                        </li>
+                         <li>
+                            <a href="{% url 'import-institute-panels' %}">import institutes Panels/apply portals</a>
+                        </li>
+                        <li>
+                            <a href="{% url 'delete_course' %}">Course Delete</a>
+                        </li>
+                         <li>
+                            <a href="{% url 'logout' %}">logout</a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+    </div>
+</header>

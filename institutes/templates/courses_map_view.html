@@ -1,0 +1,20 @@
+<div class="card" style="width: 18rem;">
+    <!--  <svg class="bd-placeholder-img card-img-top" width="100%" height="100" xmlns="https://homepages.cae.wisc.edu/~ece533/images/monarch.png" aria-label="Placeholder: Image cap" preserveAspectRatio="xMidYMid slice" role="img"><title>Placeholder</title><rect width="100%" height="100%" fill="#868e96"/><text x="50%" y="50%" fill="#dee2e6" dy=".3em">Image cap</text></svg>-->
+    <img class="bd-placeholder-img card-img-top" src="https://homepages.cae.wisc.edu/~ece533/images/monarch.png"
+         width="100%" height="100">
+
+    <div class="card-body">
+        <h5 class="card-title">{{institute.name}}</h5>
+        <p class="card-text">{{institute.city}} ,{{institute.state}},{{institute.country }}</p>
+    </div>
+    <ul class="list-group list-group-flush">
+        <h6 class="card-title pl-5">Courses List</h6>
+        {% for course in institute.course_set.all%}
+        <li class="list-group-item">{{course.name}} ( {{course.specializations}} )</li>
+        {% endfor%}
+    </ul>
+    <div class="card-body">
+        <a href="#" class="card-link">How to apply</a>
+        <a href="#" class="card-link">Uni web link</a>
+    </div>
+</div>

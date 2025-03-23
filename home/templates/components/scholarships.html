@@ -1,0 +1,78 @@
+{% load static %}
+<section class="scholSec">
+    <div class="wrapper">
+        <div class="scholTop">
+            <h1>STUDY ABROAD SCHOLARSHIPS</h1>
+            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been
+                the industry's standard dummy text ever</p>
+        </div>
+    </div>
+    <div class="scholSlider">
+            <div class="slide">
+            {% for scholarship in scholarships %}
+
+                <div class="scholBox">
+                    <img src="{% static 'images/scholarship/schol1.png' %}" height="" width="" alt="scholarship">
+                    <div class="cont">
+                        <h2>{{ scholarship.count }} Scholarships in {{ scholarship.country }}</h2>
+                        <button class="btn">View More {{ forloop.counter }}</button>
+                    </div>
+                </div>
+
+                {% if forloop.counter|divisibleby:"2" %}
+                    </div>
+                    <div class="slide">
+                {% endif %}
+
+            {% endfor %}
+            </div>
+        {#        <div class="slide">#}
+        {#            <div class="scholBox">#}
+        {#                <img src="{% static 'images/scholarship/schol3.png' %}" height="" width="" alt="scholarship">#}
+        {#                <div class="cont">#}
+        {#                    <h2>805 Scholarships in Neterlands</h2>#}
+        {#                    <button class="btn">View More</button>#}
+        {#                </div>#}
+        {#            </div>#}
+        {#            <div class="scholBox">#}
+        {#                <img src="{% static 'images/scholarship/schol4.png' %}" height="" width="" alt="scholarship">#}
+        {#                <div class="cont">#}
+        {#                    <h2>805 Scholarships in UK</h2>#}
+        {#                    <button class="btn">View More</button>#}
+        {#                </div>#}
+        {#            </div>#}
+        {#        </div>#}
+        {#        <div class="slide">#}
+        {#            <div class="scholBox">#}
+        {#                <img src="{% static 'images/scholarship/schol1.png' %}" height="" width="" alt="scholarship">#}
+        {#                <div class="cont">#}
+        {#                    <h2>805 Scholarships in US</h2>#}
+        {#                    <button class="btn">View More</button>#}
+        {#                </div>#}
+        {#            </div>#}
+        {#            <div class="scholBox">#}
+        {#                <img src="{% static 'images/scholarship/schol2.png' %}" height="" width="" alt="scholarship">#}
+        {#                <div class="cont">#}
+        {#                    <h2>805 Scholarships in Canada</h2>#}
+        {#                    <button class="btn">View More</button>#}
+        {#                </div>#}
+        {#            </div>#}
+        {#        </div>#}
+        {#        <div class="slide">#}
+        {#            <div class="scholBox">#}
+        {#                <img src="{% static 'images/scholarship/schol3.png' %}" height="" width="" alt="scholarship">#}
+        {#                <div class="cont">#}
+        {#                    <h2>805 Scholarships in Neterlands</h2>#}
+        {#                    <button class="btn">View More</button>#}
+        {#                </div>#}
+        {#            </div>#}
+        {#            <div class="scholBox">#}
+        {#                <img src="{% static 'images/scholarship/schol4.png' %}" height="" width="" alt="scholarship">#}
+        {#                <div class="cont">#}
+        {#                    <h2>805 Scholarships in UK</h2>#}
+        {#                    <button class="btn">View More</button>#}
+        {#                </div>#}
+        {#            </div>#}
+        {#        </div>#}
+    </div>
+</section>

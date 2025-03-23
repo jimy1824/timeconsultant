@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block scripts-head %}
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet"/>
+    <link href="https://code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.min.css" rel="stylesheet"/>
+
+{% endblock %}
+
+{% block content %}
+    <main class="main">
+
+{#        {% include "components/basic_search_form.html" %}#}
+{#        {% include "components/map_view.html" %}#}
+
+{#        {% include "components/scholarships.html" %}#}
+{##}
+{#        {% include "components/universities_groups.html" %}#}
+{##}
+{#        {% include 'components/applications.html' %}#}
+{##}
+{#        {% include "components/ranking.html" %}#}
+    </main>
+
+{% endblock %}
+
+{% block foot-script %}
+
+    <script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC0MGZPpZYu79oFwRFCG0yu-IfQHyBPTnM&callback=initMap"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+{#    <script src="https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>#}
+
+    <script>
+        $('document').ready(function () {
+            $('#categories').select2();
+            $('#countries').select2();
+            {#$('#testing').select2();#}
+
+            $('#testing').select2({
+                ajax: {
+                    url: '{% url 'course-autocomplete' %}',
+                    dataType: "json",
+                    type: "GET",
+                    data: function (params) {
+                        console.log('daat function')
+                        console.log(params.data)
+                        var queryParameters = {
+                            q: params.name
+                        }
+                        return queryParameters;
+                    },
+                    processResults: function (data) {
+                         console.log('processResults function')
+                        console.log(data)
+                        return {
+                            results: data.results
+                        };
+                    }
+                },
+                placeholder: 'Select a Lv0',
+                minimumInputLength: 2
+            });
+
+
+        });
+    </script>
+    <script>
+        {#$(function () {#}
+        {#    $("#searchbox").autocomplete({#}
+        {#        //console.log("some");#}
+        {#        source: '{% url 'course-autocomplete' %}',#}
+        {#        minLength: 2#}
+        {#    });#}
+        {#});#}
+    </script>
+{% endblock %}

@@ -1,0 +1,19 @@
+<div class="col-4 ">
+    <div class="card">
+        <img src="https://homepages.cae.wisc.edu/~ece533/images/monarch.png" class="card-img-top" alt="...">
+        <div class="card-body">
+            <h5 class="card-title">{{ result.name }}</h5>
+            <p class="card-text">{{ result.discipline.name }}</p>
+        </div>
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">specilization:{{ result.specializations }}</li>
+            <li class="list-group-item">institute:{{ result.institute.name }}</li>
+            <li class="list-group-item">{{ result.institute.city }}
+                ,{{ result.institute.state }},{{ result.institute.country }}
+            </li>
+        </ul>
+        <div class="card-body">
+            <a href="#" class="card-link">more detail</a>
+        </div>
+    </div>
+</div>

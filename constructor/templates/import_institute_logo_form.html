@@ -1,0 +1,133 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+    <div class="container-fluid">
+        <div class="row mt-5">
+            <div class="col-md-6 offset-md-3 col-lg-6 offset-lg-3 sm-12 mb-5">
+                <div class="card bg-light">
+                    <div class="card-body">
+                        <h5 class="card-title" style="color: black">Import Course from excel</h5>
+                        <div class="row">
+                            <div class="col-md-12 mb-3">
+                                <form id="form-import" method="POST" action="#"
+                                      enctype="multipart/form-data">
+                                    {% csrf_token %}
+                                    <div class="form-inline">
+                                        <input id="document_file" type="file" name="document_file"
+                                               class="form-control col mr-2" required>
+                                        <button id="import_button" type="submit" class="btn btn-primary">Import</button>
+                                    </div>
+                                </form>
+                            </div>
+                            <div id="import-progress-container" class="col-md-12">
+                                <h1 style="text-align: center;color: black">Results</h1>
+                                <div class="row">
+                                    <div class="col-md-4">Total:<span id="total"></span></div>
+                                    <div class="col-md-4 text-center">Pending:<span id="status"></span></div>
+                                    <div class="col-md-4 text-right">Current:<span id="current"></span></div>
+                                </div>
+                                <div style="color:black" id="celery-result"></div>
+                            </div>
+                            <div id="import-progress-container" class="col-md-12">
+                                <div id="import-progress-message">Waiting for file . . .</div>
+                                <div class="progress">
+                                    <div id="import-progress-bar"
+                                         class="progress-bar progress-bar-striped progress-bar-animated"
+                                         role="progressbar" aria-valuemin="0" aria-valuemax="100">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"
+            integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+            crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+            crossorigin="anonymous"></script>
+    <script src="{% static 'celery_progress/celery_progress.js' %}"></script>
+    <script>
+        $(function () {
+            $("#form-import").on("submit", (e) => {
+                e.preventDefault()
+                let formData = new FormData($("#form-import")[0])
+                // formData.append("csrfmiddlewaretoken", "{% csrf_token %}")
+                $.ajax({
+                    type: "POST",
+                    url: "{% url 'import-institute-logos' %}",
+                    data: formData,
+                    contentType: false,
+                    processData: false,
+                    cache: false,
+                    async: true,
+                    success: function (res) {
+                        $('#document_file').val('');
+                        $('#import_button').attr('disabled', 'disabled');
+                        console.log(res)
+                        getProgress(
+                            res.task_id,
+                            progressBarId = "import-progress-bar",
+                            progressBarMessageId = "import-progress-message"
+                        )
+                    },
+                    error: function (err) {
+                        console.log(err);
+                    },
+                })
+            })
+            getProgress = (task_id, progressBarId, progressBarMessageId) => {
+                const progressUrl = "{% url 'celery_progress:task_status' 'task-id-stub' %}";
+                // in callback function - assumes api response returns the task id
+                const taskUrl = progressUrl.replace('task-id-stub', task_id);
+
+
+                function onExportCourseProgress(progressBarElement, progressBarMessageElement, progress) {
+                    $('#current').text(progress.current);
+                    $('#total').text(progress.total);
+                    $('#status').text(progress.pending);
+                    progressBarMessageElement.innerHTML = `Progress ${progress.percent}% . . .`
+                    progressBarElement.setAttribute("style", `width: ${progress.percent}%`)
+                    progressBarElement.setAttribute("aria-valuenow", progress.percent)
+                }
+
+                function onResultCourseProgress(resultElement, result) {
+                    const errors = jQuery.parseJSON(result);
+                    console.log(typeof (errors), 'typeof')
+                    console.log(errors, 'results')
+                    for (let i = 0; i < errors.length; i++) {
+                        $(resultElement).append(
+                            $('<h1 style="color:black">').text(errors[i].key),
+                            $('<p style="color:black">').text(errors[i].error),
+                        );
+                    }
+                    $('#import_button').removeAttr('disabled');
+                }
+
+                function onExportCourseSuccess(progressBarElement, progressBarMessageElement, result) {
+                    $('#current').text('');
+                    $('#total').text('');
+                    $('#status').text('');
+                    progressBarMessageElement.innerHTML = "Waiting for file . . ."
+                    progressBarElement.setAttribute("style", "width: 0%")
+                    progressBarElement.setAttribute("aria-valuenow", 0)
+                }
+
+                CeleryProgressBar.initProgressBar(taskUrl, {
+                    progressBarId: progressBarId,
+                    progressBarMessageId: progressBarMessageId,
+                    onProgress: onExportCourseProgress,
+                    onResult: onResultCourseProgress,
+                    onSuccess: onExportCourseSuccess,
+                })
+            }
+        });
+    </script>
+{% endblock %}

@@ -1,0 +1,52 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Time Consultant</title>
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:200,300,400,500,600,700,800" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/allstyles.css' %}">
+    <link rel="stylesheet" type="text/css"
+          href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    {% block scripts-head %}
+
+    {% endblock %}
+    <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
+</head>
+
+<body class="home">
+
+
+<!--header-->
+{% include "header.html" %}
+
+{% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <li  {% if message.tags %} class=" {{ message.tags }} " {% endif %}> {{ message }} </li>
+    {% endfor %}
+</ul>
+{% endif %}
+
+<!--content-->
+{% block content %}
+
+{% endblock %}
+
+
+<!--footeer-->
+{% include "footer.html" %}
+
+
+<script type="text/javascript " src="{% static 'js/jquery.min.js' %} "></script>
+<script src="{% static 'js/plugins.js' %} "></script>
+<script src="{% static 'js/system.js' %} "></script>
+{% block foot-script %}
+
+{% endblock %}
+</body>
+
+</html>

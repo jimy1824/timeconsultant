@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<H1>upload data sheet </H1>
+<form action="{% url 'upload-excel-data' %}" method="post" enctype="multipart/form-data">
+    {% if errors %}
+        <ul>
+        {% for field in errors %}
+        <li> <b>{{ field.key }}</b> <span>{{ field.error }}</span></li>
+        {% endfor %}
+        </ul>
+
+    {% endif %}
+
+    {% csrf_token %}
+    {{ form }}
+    <input type="submit" value="Submit">
+</form>
+</body>
+</html>

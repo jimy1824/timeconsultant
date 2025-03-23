@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                <h2>Search Results</h2>
+                <hr class="star-primary">
+            </div>
+        </div>
+        {% if results %}
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <h2>Searched results {{ results|length }}</h2>
+                </div>
+            </div>
+            <div class="row">
+                {% include "components/courses_list_card_view.html" %}
+            </div>
+        {% else %}
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <h2>no result found</h2>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}

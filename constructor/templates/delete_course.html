@@ -1,0 +1,77 @@
+
+
+
+{% extends 'base.html' %}
+{% load static %}
+
+
+{#{% block content %}#}
+{##}
+{#    <section class="locationSec">#}
+{#    <div class="wrapper">#}
+{##}
+{#    <div class="container">#}
+{#        <div class="row text-center">#}
+{#            <h1>Upload data</h1>#}
+{#        </div>#}
+{#        <div class="row">#}
+{#            <form action="{% url 'upload-excel-data' %}" method="post" enctype="multipart/form-data">#}
+{#                {% if errors %}#}
+{#                    <ul>#}
+{#                        {% for field in errors %}#}
+{#                            <li><b>{{ field.key }}</b> <span>{{ field.error }}</span></li>#}
+{#                        {% endfor %}#}
+{#                    </ul>#}
+{##}
+{#                {% endif %}#}
+{##}
+{#                {% csrf_token %}#}
+{#                {{ form }}#}
+{#                <input type="submit" value="Submit">#}
+{#            </form>#}
+{##}
+{#        </div>#}
+{##}
+{#    </div>#}
+{##}
+{#    </div>#}
+{#    </section>#}
+{##}
+{##}
+{##}
+{#{% endblock %}#}
+
+
+
+
+
+{% block content %}
+
+    <div class="container-fluid">
+        <div class="row mt-5">
+            <div class="col-md-6 offset-md-3 col-lg-6 offset-lg-3 sm-12 mb-5">
+                <div class="card bg-light">
+                    <div class="card-body">
+                        <h5 class="card-title" style="color: black">Course Deletion country Respective</h5>
+                        <div class="row">
+                            <div class="col-md-12 mb-3">
+                                <form id="form-import" method="POST">
+                                    {% csrf_token %}
+                                    <div>
+                                        <label for="{{ form.country.id_for_label }}">Select Country</label>
+                                        {{ form.country }}
+                                        {% for error in  form.country.errors %}
+                                            <p class="help-block">{{ error }}</p>
+                                        {% endfor %}
+                                        <button id="import_button" type="submit" class="btn btn-primary" style="margin-top: 10px; float: right">Submit</button>
+                                    </div>
+                                </form>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
